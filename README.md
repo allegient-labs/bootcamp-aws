@@ -19,7 +19,7 @@ Replace `UNIQUE-BUCKET-NAME` with a unique string
 
 ```bash
 sam package --template-file sam.yml --s3-bucket UNIQUE-BUCKET-NAME --output-template-file template-output.yml
-sam deploy --template-file template-output.yml --stack-name dmi-bootcamp-sam --capabilities CAPABILITY_IAM
+sam deploy --template-file template-output.yml --stack-name dmi-aws-bootcamp-sam --capabilities CAPABILITY_IAM
 ```
 
 ### Serverless Framework CLI
