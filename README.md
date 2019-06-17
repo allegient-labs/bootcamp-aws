@@ -4,10 +4,10 @@
 
 ## Requirements
 
-- Node v8+
-- AWS CLI
-- SAM CLI
-- Servless Framework CLI
+- [Node v8+](https://nodejs.org/en/)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html)
+- [SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+- [Serverless Framework CLI](https://serverless.com/framework/docs/getting-started/)
 
 ## Deploying
 
