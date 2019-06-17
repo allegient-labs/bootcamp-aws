@@ -11,11 +11,45 @@ Resources:
   CreatePet:
     Type: AWS::Serverless::Function
     Properties:
-      #
+      CodeUri: createPet/
+      Handler: index.lambdaHandler
+      Runtime: nodejs10.x
+      Tracing: Active
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PetTable
+      Layers:
+        - !Ref PetLayer
+      Environment:
+        Variables:
+            TABLE_NAME: !Ref PetTable
+      Events:
+        CreatePet:
+          Type: Api
+          Properties:
+            Path: /pet
+            Method: POST
   ReadPet:
     Type: AWS::Serverless::Function
     Properties:
-      #
+      CodeUri: readPet/
+      Handler: index.lambdaHandler
+      Runtime: nodejs10.x
+      Tracing: Active
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PetTable
+      Layers:
+        - !Ref PetLayer
+      Environment:
+        Variables:
+            TABLE_NAME: !Ref PetTable
+      Events:
+        ReadPet:
+          Type: Api
+          Properties:
+            Path: /pet/{petId}
+            Method: get
   UpdatePet:
     Type: AWS::Serverless::Function
     Properties:
@@ -40,11 +74,45 @@ Resources:
   DeletePet:
     Type: AWS::Serverless::Function
     Properties:
-      #
+      CodeUri: deletePet/
+      Handler: index.lambdaHandler
+      Runtime: nodejs10.x
+      Tracing: Active
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PetTable
+      Layers:
+        - !Ref PetLayer
+      Environment:
+        Variables:
+            TABLE_NAME: !Ref PetTable
+      Events:
+        DeletePet:
+          Type: Api
+          Properties:
+            Path: /pet/{petId}
+            Method: delete
   ListPets:
     Type: AWS::Serverless::Function
     Properties:
-      #
+      CodeUri: listPets/
+      Handler: index.lambdaHandler
+      Runtime: nodejs10.x
+      Tracing: Active
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PetTable
+      Layers:
+        - !Ref PetLayer
+      Environment:
+        Variables:
+            TABLE_NAME: !Ref PetTable
+      Events:
+        ListPets:
+          Type: Api
+          Properties:
+            Path: /pet
+            Method: get
 
   PetLayer:
     Type: AWS::Serverless::LayerVersion
