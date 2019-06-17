@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Pet Store Sample App
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  CreatePet:
+    Type: AWS::Serverless::Function
+    Properties:
+      #
+  ReadPet:
+    Type: AWS::Serverless::Function
+    Properties:
+      #
+  UpdatePet:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: updatePet/
+      Handler: index.lambdaHandler
+      Runtime: nodejs10.x
+      Tracing: Active
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PetTable
+      Layers:
+        - !Ref PetLayer
+      Environment:
+        Variables:
+            TABLE_NAME: !Ref PetTable
+      Events:
+        UpdatePet:
+          Type: Api
+          Properties:
+            Path: /pet/{petId}
+            Method: put
+  DeletePet:
+    Type: AWS::Serverless::Function
+    Properties:
+      #
+  ListPets:
+    Type: AWS::Serverless::Function
+    Properties:
+      #
+
+  PetLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: petLayer/
+      CompatibleRuntimes:
+        - nodejs10.x
+
+  PetTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+        PrimaryKey:
+            Name: id
+            Type: String
+        ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+        SSESpecification:
+            SSEEnabled: true
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway endpoint URL for Prod stage for the API"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
